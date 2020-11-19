@@ -14,20 +14,27 @@ class Template(models.Model):
     description = models.CharField(max_length=100)
   #   cover_image = models.ImageField(verbose_name='Cover_Image',upload_to='resume/cover_image/', null=True, blank=True)
     templates = models.FileField(upload_to='resume/templates/')
+    def __str__(self):
+        return self.title
 
 
 class Resume(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     template = models.ForeignKey(Template, on_delete=models.SET_NULL, null=True, blank= True)
-    skills = models.ManyToManyField("Skill",verbose_name="Skill")
-    summary= models.TextField(max_length=100, verbose_name='Professional Summary')
+    skills = models.ManyToManyField("Skill",verbose_name="Skill", related_name='skills', blank=True)
+    summary= models.TextField(max_length=100, verbose_name='Professional Summary', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+    
+    
 
    
 
 
 class PersonalInformation(models.Model):
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.OneToOneField(Resume, on_delete=models.CASCADE)
     firstname = models.CharField(max_length=100, verbose_name='First Name')
     lastname = models.CharField(max_length=100, verbose_name='Last Name')
     cover_image = models.ImageField(verbose_name='Cover_Image',upload_to='resume/cover_image/', null=True, blank=True)
@@ -44,7 +51,7 @@ class PersonalInformation(models.Model):
 class Experience(models.Model):
 
 
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True, blank=True)
     employer = models.CharField(max_length=100, verbose_name='Employer')
     job_title = models.CharField(max_length=100, verbose_name='Job Title',null=True, blank=True)
     start_year = models.IntegerField(choices=YEAR_CHOICES,default=datetime.datetime.now().year,null=True, blank=True)
@@ -58,7 +65,7 @@ class Experience(models.Model):
         return self.resume.user.username
 
 class Education(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True, blank=True)
     school_name = models.CharField(max_length=100, verbose_name='School Name',null=True, blank=True)
     country = CountryField(blank_label='(select country)')
     state = models.CharField(max_length=100, verbose_name='State',null=True, blank=True)
@@ -73,7 +80,9 @@ class Education(models.Model):
         return self.resume.user.username
 
 class Skill(models.Model):
+    
     name = models.CharField(max_length=100,null=True, blank=True)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name='resume_skills', null=True, blank=True)
     level = models.IntegerField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -114,7 +123,7 @@ class Skill(models.Model):
 #     timestamp = models.DateTimeField(auto_now_add=True)
 
 #     def __str__(self):
-        return self.user.username
+ #       return self.user.username
 
     
 

@@ -1,22 +1,29 @@
 from django.contrib import admin
-# from .models import PersonalInformation,usersResume,Experience,Skill,About,Education, SkillTest
+from .models import PersonalInformation,Experience,Skill,Education,Resume, Template
 # Register your models here.
 
+class EducationAdmin(admin.TabularInline):
+    model= Education
 
+class SkillAdmin(admin.TabularInline):
+    model= Skill
 
-# class usersResumeAdmin(admin.ModelAdmin):
-#     search_fields = ['user__username']
-#     list_display = ['__str__', 'user']
-    
-#     class Meta:
-#         model = usersResume
+class PersonalInformationAdmin(admin.TabularInline):
+    model= PersonalInformation
 
-# admin.site.register(usersResume,usersResumeAdmin)
-# admin.site.register(PersonalInformation)
-# admin.site.register(Experience)
-# admin.site.register(Skill)
-# admin.site.register(About)
-# admin.site.register(Education)
-# admin.site.register(SkillTest)
+class ExperienceAdmin(admin.TabularInline):
+    model= Experience
+
+class ResumeAdmin(admin.ModelAdmin):
+
+    search_fields = ['user__username']
+    list_display = ['__str__', 'user',]
+    inlines = [SkillAdmin,ExperienceAdmin,PersonalInformationAdmin,EducationAdmin]
+    class Meta:
+         model = Resume
+
+admin.site.register(Resume,ResumeAdmin)
+admin.site.register(Template)
+
 
  
