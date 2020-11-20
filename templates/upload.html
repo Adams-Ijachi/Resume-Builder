@@ -6,14 +6,188 @@
 
 <h1>upload</h1>
 
-{% block content %}
+{% block form %}
 <!-- <input type="file" name="document">
 <button type="submit">
     upload file
 </button> -->
-<form method="POST" enctype="multipart/form-data"  class="bootstrap4">
+
     {% csrf_token %}
-    {{form|crispy  }}
+    
+    {{resume.as_p }}
+    <table class="table form-table table-borded table-sm">
+        <thead class="text-center">
+            <tr>
+                <th>Employer</th>
+                <th>job_title</th>
+                <th>start_year</th>
+                <th>start_month</th>
+                <th>end_year</th>
+                <th>end_month</th>
+                <th>presently_work_here</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form_data in experienceForm %}
+              <tr class='item'>
+                  <td>
+                      {{ form_data.employer }}
+                  </td>
+                  <td>
+                    {{ form_data.job_title }}
+                </td>
+                <td>
+                    {{ form_data.start_year }}
+                </td>
+                <td>
+                    {{ form_data.start_month }}
+                </td>
+                <td>
+                    {{ form_data.end_year }}
+                </td>
+                <td>
+                    {{ form_data.end_month }}
+                </td>
+                <td>
+                    {{ form_data.presently_work_here }}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}">Delete</button>
+                </td>
+              </tr>
+            {%endfor %}
+            <tr>
+                <td colspan="9" style="border-left:none !important; border-right: none !important; border-bottom: none !important ;">
+                    <button type="button" class="btn btn-sm btn-success add-form-row" id="{{ experienceForm.prefix }}">Add</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>     
+    {{ experienceForm.management_form }}
+    
+
+
     <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-{%  endblock content %}
+
+{%  endblock form %}
+
+{% block javascript %}
+
+<script>
+
+    const radioBtn =  document.getElementById("id_Experience-0-presently_work_here")
+    
+
+    const ToggleEndMonthYear = function(event){
+        
+        
+        const endYear = document.getElementById("id_Experience-0-end_year")
+        const endMonth = document.getElementById("id_Experience-0-end_month")
+        endYear.classList.toggle("d-none");
+        endMonth.classList.toggle("d-none");
+
+
+    }
+    radioBtn.addEventListener("click", ToggleEndMonthYear);
+
+
+    $(document).ready(function(){
+
+
+        function updateElementIndex(el, prefix, ndx){
+            var id_regex = new RegExp('(' + prefix + '-\\d+- )');
+            var replacement = prefix + '-' + ndx + '-';
+            if ( $(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+            if (el.id) el.id = el.id.replace(id_regex, replacement);
+            if (el.name) el.name = el.name.replace(id_regex, replacement);
+        }
+
+        function addForm(btn, prefix){
+            
+            var formCount = parseInt($('#id_'+ prefix + '-TOTAL_FORMS').val());
+            
+            
+    
+
+           
+            if (formCount < 1000){
+                var row = $(".item:last").clone(false).get(0);
+
+                
+                
+                $(row).removeAttr('id').insertAfter(".item:last");
+                $(".errorlist", row).remove();
+                $(row).children().removeClass("error");
+
+                $(row).find('.formset-field').each(function (){
+                    updateElementIndex(this, prefix, formCount);
+                    $(this).val('');
+                    $(this).removeAttr('value')
+                    $(this).prop('checked', false);
+
+                });
+
+                $(row).find("delete").click(function (){
+                    return deleteForm(this, prefix);
+                });
+
+                $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
+            }
+            return false;
+        }
+        
+
+        function deleteForm(btn, prefix){
+            var formCount = parseInt($('#id_'+ prefix + '-TOTAL_FORMS').val());
+            if (formCount > 1){
+
+                var goto_id = $(btn).find('input').val();
+                if(goto_id){
+                    $.ajax({
+                        url:"/" + window.location.pathname.split("/")[1]+ "/formset-data-delete/"+ goto_id +"/?next="+window.location.pathname,
+                        error: function(){
+                            console.log('error')
+                        },
+                        success: function(data){
+                            $(btn).parents('.item').remove();
+                        },
+                        type:'GET',
+                    });
+                }else{
+                    $(btn).parents('.item').remove();
+                }
+
+                var forms = $('.item');
+
+                $('#id_'+ prefix + '-TOTAL_FORMS').val(forms.length);
+                var i = 0;
+
+                for (formCount = forms.length; i < formCount; i++){
+                    $(forms.get(i)).find('.formset-field').each(function(){
+                        updateElementIndex(this, prefix, i);
+                    
+                    });
+                }
+            }
+            return false
+        }
+            
+
+        $('body').on('click', '.remove-form-row', function(){
+            deleteForm($(this), String($('.add-form-row').attr('id')));
+        });
+
+        $('body').on('click', '.add-form-row', function(){
+           var b = String($(this).attr('id'))
+           console.log(b)
+           return addForm($(this), String($(this).attr('id')));
+        });
+
+    });
+
+
+  
+</script>
+
+
+{% endblock javascript %}

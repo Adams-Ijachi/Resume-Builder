@@ -14,6 +14,8 @@ class Template(models.Model):
     description = models.CharField(max_length=100)
   #   cover_image = models.ImageField(verbose_name='Cover_Image',upload_to='resume/cover_image/', null=True, blank=True)
     templates = models.FileField(upload_to='resume/templates/')
+    # timestamp = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.title
 

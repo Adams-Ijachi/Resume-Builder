@@ -5,8 +5,8 @@ from resumeapp import views
 
 urlpatterns = [
    
-    # # path('', views.home, name='home'),
-    # # path('upload', views.upload, name='upload'),
+    path('', views.home, name='home'),
+    path('upload/<int:pk>', views.resumeUpload, name='resumeUpload'),
     # path('',views.templateslist, name='tempList'),
     # path('upload',views.templatesUpload, name='templatesUpload' ),
     # path('temp/delete/<int:pk>', views.delete, name='delete_temp')

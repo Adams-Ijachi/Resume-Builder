@@ -1,7 +1,32 @@
-from django import forms
-# from .models import Template
+from django.forms import ModelForm, Textarea,modelformset_factory, TextInput
+from .models import Resume, Experience, PersonalInformation
 
-# class TemplateForm(forms.ModelForm):
-#     class Meta:
-#         model = Template
-#         fields  = ['title', 'templates','cover_image']
+class ResumeForm(ModelForm):
+    class Meta:
+        model = Resume
+        fields  = ['skills','summary']
+        widgets = {
+            'summary': Textarea(attrs={'cols': 80, 'rows': 6}),
+        }
+
+
+class PersonalInformationForm(ModelForm):
+    class Meta:
+        model = PersonalInformation
+      
+        exclude = ['resume','timestamp']
+
+class ExperienceForm(ModelForm):
+    class Meta:
+        model = Experience
+      
+        exclude = ['resume','timestamp']
+
+        widgets = {
+            'employer': TextInput(attrs={'class':'formset-field'}),
+        }
+        
+       
+    
+ExperienceFormSet = modelformset_factory(Experience, form=ExperienceForm)
+
