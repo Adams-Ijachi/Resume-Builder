@@ -15,7 +15,7 @@
     {% csrf_token %}
     
     {{resume.as_p }}
-    <table class="table form-table table-borded table-sm">
+    <table class="table form-table table-borded table-sm" id="table1">
         <thead class="text-center">
             <tr>
                 <th>Employer</th>
@@ -35,7 +35,7 @@
                   </td>
                   <td>
                     {{ form_data.job_title }}
-                </td>
+                  </td>
                 <td>
                     {{ form_data.start_year }}
                 </td>
@@ -74,26 +74,93 @@
 {% block javascript %}
 
 <script>
+    var number = 0
 
-    const radioBtn =  document.getElementById("id_Experience-0-presently_work_here")
+    function log(btn){
+
+      
+            var o = btn.parents("tr").children("td:eq(4)").toggleClass('d-none')
+            var o = btn.parents("tr").children("td:eq(3)").toggleClass('d-none')
+            console.log(o)
+    }
+   
+    // const radioBtn =  document.querySelectorAll(".presently_work_here")
+    // var checkboxes;
+    // if(radioBtn.length){
+    //     for( var i = 0; i < number; i++){
+    //         row = radioBtn[i].addEventListener('click', ()=>{
+    //           console.log(number)
+
+    //         })
+
+    //        }
+    // } 
+    // function check (){
+    //                 const radioBtn =  document.querySelectorAll(".presently_work_here")
+    //                 for( var i = 0; i < radioBtn.length; i++){
+    //                     row = radioBtn[i].addEventListener('click', ()=>{
+    //                     console.log('k')
+
+    //                 })
+
+    //               }
+    //             }
+   
+   
+    //  for( var i = 0; i <radioBtn.length; i++){
+    //       var checkboxes = checkboxes[i].addEventListener('click', log(i))
+    // } 
+
     
 
-    const ToggleEndMonthYear = function(event){
+    // const ToggleEndMonthYear = function(event){
         
         
-        const endYear = document.getElementById("id_Experience-0-end_year")
-        const endMonth = document.getElementById("id_Experience-0-end_month")
-        endYear.classList.toggle("d-none");
-        endMonth.classList.toggle("d-none");
+    //     const endYear = document.getElementById("id_Experience-0-end_year")
+    //     const endMonth = document.getElementById("id_Experience-0-end_month")
+    //     endYear.classList.toggle("d-none");
+    //     endMonth.classList.toggle("d-none");
 
 
-    }
-    radioBtn.addEventListener("click", ToggleEndMonthYear);
+    // }
+    // const ToggleEndMonthYear = function(){
+    //     var table = document.getElementById('table1')
+    //     var checkboxes = document.querySelectorAll(".presently_work_here")
+    //     for( var i = 0; i <checkboxes.length; i++){
+    //         console.log(i)
+    //     }
+    // }
+    // radioBtn.addEventListener("click", ToggleEndMonthYear);
+
+    // $('body').on('click', '.presently_work_here', function(){
+    //         var table = $('#table1')
+    //         checkboxes = document.querySelectorAll(".presently_work_here")
+    //         var message;
+    //         for( var i = 0; i <checkboxes.length; i++){
+    //             if (checkboxes[i].checked){
+    //                 var row = checkboxes[i].parentNode.parentNode;
+    //                 message += row.cells[8].innerHTML
+    //                 console.log(message)
+    //             }
+    //         }
+            
+    //     })
 
 
     $(document).ready(function(){
 
+    //   function check (){
+    //     var radioBtn = $('#table1')
+    //     $(radioBtn).find('.presently_work_here').each(function (){
+    //                    $(this).on('click',function(){
+    //                       var r =$(this).parents('tr').children('td:eq(4)')
+    //                       r.hide()
 
+    //                        console.log(r)
+    //                    })
+    //             })
+    //   }
+    //   check()
         function updateElementIndex(el, prefix, ndx){
             var id_regex = new RegExp('(' + prefix + '-\\d+- )');
             var replacement = prefix + '-' + ndx + '-';
@@ -105,27 +172,28 @@
         function addForm(btn, prefix){
             
             var formCount = parseInt($('#id_'+ prefix + '-TOTAL_FORMS').val());
-            
-            
-    
-
+        
            
             if (formCount < 1000){
                 var row = $(".item:last").clone(false).get(0);
+                
+               
+                
 
-                
-                
                 $(row).removeAttr('id').insertAfter(".item:last");
+               
                 $(".errorlist", row).remove();
                 $(row).children().removeClass("error");
+                
 
                 $(row).find('.formset-field').each(function (){
                     updateElementIndex(this, prefix, formCount);
-                    $(this).val('');
+                    $(this).val(' ');
                     $(this).removeAttr('value')
                     $(this).prop('checked', false);
-
+                    
                 });
+
 
                 $(row).find("delete").click(function (){
                     return deleteForm(this, prefix);
@@ -174,13 +242,16 @@
             
 
         $('body').on('click', '.remove-form-row', function(){
+           
             deleteForm($(this), String($('.add-form-row').attr('id')));
         });
 
+
         $('body').on('click', '.add-form-row', function(){
            var b = String($(this).attr('id'))
-           console.log(b)
+           
            return addForm($(this), String($(this).attr('id')));
+          
         });
 
     });
