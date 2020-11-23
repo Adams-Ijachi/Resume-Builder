@@ -42,6 +42,8 @@ class PersonalInformation(models.Model):
     cover_image = models.ImageField(verbose_name='Cover_Image',upload_to='resume/cover_image/', null=True, blank=True)
     address = models.CharField(max_length=200, verbose_name='Address',null=True, blank=True)
     country = CountryField(blank_label='(select country)')
+    state = models.CharField(max_length=100, verbose_name='State',null=True, blank=True)
+    city = models.CharField(max_length=100, verbose_name='City',null=True, blank=True)
     email_address = models.EmailField(max_length=254, verbose_name='Email Address')
     phone_number = models.CharField(max_length=15, verbose_name='Phone Number',null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -51,8 +53,6 @@ class PersonalInformation(models.Model):
 
 
 class Experience(models.Model):
-
-
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True, blank=True)
     employer = models.CharField(max_length=100, verbose_name='Employer')
     job_title = models.CharField(max_length=100, verbose_name='Job Title',null=True, blank=True)

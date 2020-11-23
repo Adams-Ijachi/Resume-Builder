@@ -1,0 +1,677 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <style>
+                    /*custom font*/
+            @import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+            /*basic reset*/
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                height: 100%;
+                background: #eee;
+            }
+
+            body {
+                font-family: montserrat, arial, verdana;
+                background: transparent;
+            }
+
+            /*form styles*/
+            #msform {
+                text-align: center;
+                position: relative;
+                margin-top: 30px;
+            }
+
+            #msform fieldset {
+                background: white;
+                border: 0 none;
+                border-radius: 0px;
+                box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+                padding: 20px 30px;
+                box-sizing: border-box;
+                width: 80%;
+                margin: 0 10%;
+
+                /*stacking fieldsets above each other*/
+                position: relative;
+            }
+
+            /*Hide all except first fieldset*/
+            #msform fieldset:not(:first-of-type) {
+                display: none;
+            }
+
+            /*inputs*/
+            #msform input, #msform textarea {
+                padding: 15px;
+                border: 1px solid #ccc;
+                border-radius: 0px;
+                margin-bottom: 10px;
+                width: 100%;
+                box-sizing: border-box;
+                font-family: montserrat;
+                color: #2C3E50;
+                font-size: 13px;
+            }
+
+            #msform input:focus, #msform textarea:focus {
+                -moz-box-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+                border: 1px solid #2098ce;
+                outline-width: 0;
+                transition: All 0.5s ease-in;
+                -webkit-transition: All 0.5s ease-in;
+                -moz-transition: All 0.5s ease-in;
+                -o-transition: All 0.5s ease-in;
+            }
+
+            /*buttons*/
+            #msform .action-button {
+                width: 100px;
+                background: #2098ce;
+                font-weight: bold;
+                color: white;
+                border: 0 none;
+                border-radius: 25px;
+                cursor: pointer;
+                padding: 10px 5px;
+                margin: 10px 5px;
+            }
+
+            #msform .action-button:hover, #msform .action-button:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #2098ce;
+            }
+
+            #msform .action-button-previous {
+                width: 100px;
+                background: #aCbEd0;
+                font-weight: bold;
+                color: white;
+                border: 0 none;
+                border-radius: 25px;
+                cursor: pointer;
+                padding: 10px 5px;
+                margin: 10px 5px;
+            }
+
+            #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #aCbEd0;
+            }
+
+            /*headings*/
+            .fs-title {
+                font-size: 18px;
+                text-transform: uppercase;
+                color: #2C3E50;
+                margin-bottom: 10px;
+                letter-spacing: 2px;
+                font-weight: bold;
+            }
+
+            .fs-subtitle {
+                font-weight: normal;
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 20px;
+            }
+
+            /*progressbar*/
+            #progressbar {
+                margin-bottom: 30px;
+                overflow: hidden;
+                /*CSS counters to number the steps*/
+                counter-reset: step;
+                display: flex;
+            }
+
+            #progressbar li {
+                list-style-type: none;
+                color: #666;
+                text-transform: uppercase;
+                font-size: 9px;
+                flex-flow: column;
+                flex-direction:column;
+                position: relative;
+                letter-spacing: 1px;
+                margin: auto;
+            }
+
+            #progressbar li:before {
+                content: counter(step);
+                counter-increment: step;
+                width: 24px;
+                height: 24px;
+                line-height: 26px;
+                display: block;
+                font-size: 12px;
+                color: #333;
+                background: white;
+                border-radius: 25px;
+                margin: 0 auto 10px auto;
+
+            }
+            label {
+                /* display: inline-block; */
+                margin-bottom: .5rem;
+                float: left;
+                font-size: 10px;
+            }
+            /* .form-group{
+               
+            } */
+
+            /*progressbar connectors*/
+            #progressbar li:after {
+                content: '';
+                width: 100%;
+                height: 2px;
+                background: white;
+                position: absolute;
+                left: -50%;
+                top: 9px;
+                z-index: -1; /*put it behind the numbers*/
+            }
+
+            #progressbar li:first-child:after {
+                /*connector not needed before the first step*/
+                content: none;
+            }
+
+            /*marking active/completed steps green*/
+            /*The number of the step and the connector before it = green*/
+            #progressbar li.active:before, #progressbar li.active:after {
+                background: #2098ce;
+                color: white;
+            }
+            .form-group {
+                margin-bottom: 1rem;
+                width: 50%;
+                display: flex;
+              }
+            .form-row {
+                display: flex;
+                
+                 flex-wrap:nowrap; }
+                 .form-holder {
+                    width: 50%;
+                    margin-right: 20px;
+                    }
+
+                 .form-label {
+                        display: block;
+                        width: 100%;
+                        font-size: 16px;
+                        margin-bottom: 10px;
+                    }
+                    .checkboxFloat{
+                            width: 50%;
+                            float: right;
+                        }
+                        .django-formset {
+                            margin-bottom: 10px;
+                        }
+                    @media (max-width: 767px){
+                        .form-row {
+                            display: block;
+                        }
+                        .form-row .form-holder {
+                        width: 100%;
+                        margin-right: 20px; }
+                        .checkboxFloat{
+                            width: 100%;
+                            float: none;
+                        }
+                        .cover_image{
+                            width: 100%;
+                        }
+
+                    }
+
+
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+        <!-- MultiStep Form -->
+<div class="row">
+    <div class="col-md-12 col-md-offset-3">
+        <form id="msform">
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+  
+            </ul>
+            <!-- fieldsets -->
+             <fieldset>
+                <h2 class="fs-title">Personal Details</h2>
+                <h3 class="fs-subtitle">Tell us something more about you</h3>
+            
+                <div class="form-row" >
+                    <div class="form-holder">
+                        <label for="{{ personalInformation.firstname.id_for_label }}">{{ personalInformation.firstname.label_tag }}</label>
+                        
+                        {{ personalInformation.firstname }}
+                    </div>
+                    <div class="form-holder">
+                        <label for="{{ personalInformation.lastname.id_for_label }}">{{ personalInformation.lastname.label_tag }}</label>
+                        
+                        {{ personalInformation.lastname }}
+                    </div>
+                </div>                
+                <div class="form-row">
+                    <div class="form-group" style="display:block; width: 100%;">
+                      <label for="{{ personalInformation.address.id_for_label }}">{{ personalInformation.address.label_tag }}</label>
+                      <div class="form-holder" style="width: 100%;" >
+                        {{ personalInformation.address }}
+                      </div>
+                    </div>
+                  </div>
+
+                <div class="form-row">
+                    <div class="form-holder">
+                        <label for="{{ personalInformation.country.id_for_label_tag }}">{{ personalInformation.country.label_tag }}</label>
+                        {{ personalInformation.country }}
+                    </div>
+                    <div class="form-holder">
+                        <label for="{{ personalInformation.state.id_for_label_tag }}">{{ personalInformation.state.label_tag }}</label>
+                        <i class="zmdi zmdi-pin"></i>
+                        {{ personalInformation.state }}
+                    </div>
+                </div>
+
+                            
+                <div class="form-row" >
+                    <div class="form-holder">
+                        <label for="{{ personalInformation.email_address.id_for_label }}">{{ personalInformation.email_address.label_tag }}</label>
+                        <i class="zmdi zmdi-account"></i>
+                        {{ personalInformation.email_address }}
+                    </div>
+                    <div class="form-holder">
+                        <label for="{{ personalInformation.phone_number.id_for_label }}">{{ personalInformation.phone_number.label_tag }}</label>
+                        <i class="zmdi zmdi-account"></i>
+                        {{ personalInformation.phone_number }}
+                    </div>
+                </div>
+                
+                <label for="{{ personalInformation.cover_image.id_for_label }}">{{ personalInformation.cover_image.label_tag }}</label>
+                      <div class="form-holder cover_image">
+                        {{ personalInformation.cover_image }}
+                      </div> 
+                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset> 
+
+            <fieldset>
+                <h2 class="fs-title">Experience</h2>
+                <h3 class="fs-subtitle">List your work experience, from most recent to oldest</h3>
+                <div class="django-formset">
+                    <div class="formset-list">
+                        {% for formset in experienceForm%}
+
+                        {% for hidden in form.hidden %}
+                        
+                        {{hidden }}
+
+                        {% endfor %}
+                        <div class="form-row" >
+                            <div class="form-holder">
+                                <label for="{{ formset.employer.id_for_label }}">{{ formset.employer.label_tag }}</label>
+                                <i class="zmdi zmdi-account"></i>
+                                {{ formset.employer }}
+                            </div>
+                            <div class="form-holder">
+                                <label for="{{ formset.job_title.id_for_label }}">{{ formset.job_title.label_tag }}</label>
+                                <i class="zmdi zmdi-account"></i>
+                                {{ formset.job_title }}
+                            </div>
+                        </div>
+                        <div class="form-row" >
+                            <div class="form-group cover_image">
+                               <div class="form-holder">
+                                    <label for="{{ formset.start_month.id_for_label }}">{{ formset.start_month.label_tag }}</label>
+                                    {{ formset.start_month }}
+                                </div>
+                                <div class="form-holder">
+                                    <label for="{{ formset.start_year.id_for_label }}">{{ formset.start_year.label_tag }}</label>
+                                    {{ formset.start_year }}
+                                </div>
+
+                            </div>
+
+                            <div class="form-group cover_image">
+                                <div class="form-holder endYearAndMonth">
+                                    <label for="{{ formset.end_month.id_for_label }}">{{ formset.end_month.label_tag }}</label>
+                                    {{ formset.end_month }}
+                                </div>
+                                <div class="form-holder endYearAndMonth">
+                                    <label for="{{ formset.end_year.id_for_label }}">{{ formset.end_year.label_tag }}</label>
+                                    {{ formset.end_year }}
+                                </div>
+
+                            </div>
+
+                        </div>  
+                        <div class="form-row checkboxFloat" >
+                            <div class="form-group">
+                                <label for="{{ formset.presently_work_here.id_for_label }}" style="width: 100%;" >{{ formset.presently_work_here.label_tag }}</label>
+                                {{ formset.presently_work_here }}
+                            </div>
+                        </div>
+        
+                {% endfor %}
+                <input type="button" name="next" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}" value="delete"/>
+                <hr>
+                    </div>
+
+                </div>
+                 
+                 <input type="button" name="next" class="btn btn-success btn-sm add-form-row" id="{{ experienceForm.prefix }}" value="Add"/>
+                 
+                 {{ experienceForm.management_form }}
+                 <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                 <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">Experience</h2>
+                <h3 class="fs-subtitle">List your work experience, from most recent to oldest</h3>
+                <div class="django-formset">
+                    <div class="formset-list">
+                        {% for formset in experienceForm%}
+
+                        {% for hidden in form.hidden %}
+                        
+                        {{hidden }}
+
+                        {% endfor %}
+                        <div class="form-row" >
+                            <div class="form-holder">
+                                <label for="{{ formset.employer.id_for_label }}">{{ formset.employer.label_tag }}</label>
+                                <i class="zmdi zmdi-account"></i>
+                                {{ formset.employer }}
+                            </div>
+                            <div class="form-holder">
+                                <label for="{{ formset.job_title.id_for_label }}">{{ formset.job_title.label_tag }}</label>
+                                <i class="zmdi zmdi-account"></i>
+                                {{ formset.job_title }}
+                            </div>
+                        </div>
+                        <div class="form-row" >
+                            <div class="form-group cover_image">
+                               <div class="form-holder">
+                                    <label for="{{ formset.start_year.id_for_label }}">{{ formset.start_year.label_tag }}</label>
+                                    {{ formset.start_year }}
+                                </div>
+                                <div class="form-holder">
+                                    <label for="{{ formset.start_month.id_for_label }}">{{ formset.start_month.label_tag }}</label>
+                                    {{ formset.start_month }}
+                                </div>
+
+                            </div>
+
+                            <div class="form-group cover_image">
+                                <div class="form-holder endYearAndMonth">
+                                    <label for="{{ formset.end_year.id_for_label }}">{{ formset.end_year.label_tag }}</label>
+                                    {{ formset.end_year }}
+                                </div>
+                                <div class="form-holder endYearAndMonth">
+                                    <label for="{{ formset.end_year.id_for_label }}">{{ formset.end_year.label_tag }}</label>
+                                    {{ formset.end_year }}
+                                </div>
+
+                            </div>
+
+                        </div>  
+                        <div class="form-row checkboxFloat" >
+                            <div class="form-group">
+                                <label for="{{ formset.presently_work_here.id_for_label }}" style="width: 100%;" >{{ formset.presently_work_here.label_tag }}</label>
+                                {{ formset.presently_work_here }}
+                            </div>
+                        </div>
+        
+                {% endfor %}
+                <input type="button" name="next" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}" value="delete"/>
+                <hr>
+                    </div>
+
+                </div>
+                 
+                 <input type="button" name="next" class="btn btn-success btn-sm add-form-row" id="{{ experienceForm.prefix }}" value=" + Add"/>
+                 
+                 {{ experienceForm.management_form }}
+                 <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                 <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- /.MultiStep Form -->
+</div>
+<script>
+        function endYearAndMonthDisplay(btn) {
+            var endYearAndMonth = btn.parents('div.formset-list').find('.endYearAndMonth').toggleClass('d-none')        
+            }
+    
+        $(document).ready(function(){
+
+                    //jQuery time
+                var current_fs, next_fs, previous_fs; //fieldsets
+                var left, opacity, scale; //fieldset properties which we will animate
+                var animating; //flag to prevent quick multi-click glitches
+
+                $(".next").click(function(){
+                    if(animating) return false;
+                    animating = true;
+                    
+                    current_fs = $(this).parent();
+                    next_fs = $(this).parent().next();
+                    
+                    //activate next step on progressbar using the index of next_fs
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                    
+                    //show the next fieldset
+                    next_fs.show(); 
+                    //hide the current fieldset with style
+                    current_fs.animate({opacity: 0}, {
+                        step: function(now, mx) {
+                            //as the opacity of current_fs reduces to 0 - stored in "now"
+                            //1. scale current_fs down to 80%
+                            scale = 1 - (1 - now) * 0.2;
+                            //2. bring next_fs from the right(50%)
+                            left = (now * 50)+"%";
+                            //3. increase opacity of next_fs to 1 as it moves in
+                            opacity = 1 - now;
+                            current_fs.css({
+                        'transform': 'scale('+scale+')',
+                        'position': 'absolute'
+                    });
+                            next_fs.css({'left': left, 'opacity': opacity});
+                        }, 
+                        duration: 800, 
+                        complete: function(){
+                            current_fs.hide();
+                            animating = false;
+                        }, 
+                        //this comes from the custom easing plugin
+                        easing: 'easeInOutBack'
+                    });
+                });
+
+                $(".previous").click(function(){
+                    if(animating) return false;
+                    animating = true;
+                    
+                    current_fs = $(this).parent();
+                    previous_fs = $(this).parent().prev();
+                    
+                    //de-activate current step on progressbar
+                    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                    
+                    //show the previous fieldset
+                    previous_fs.show(); 
+                    //hide the current fieldset with style
+                    current_fs.animate({opacity: 0}, {
+                        step: function(now, mx) {
+                            //as the opacity of current_fs reduces to 0 - stored in "now"
+                            //1. scale previous_fs from 80% to 100%
+                            scale = 0.8 + (1 - now) * 0.2;
+                            //2. take current_fs to the right(50%) - from 0%
+                            left = ((1-now) * 50)+"%";
+                            //3. increase opacity of previous_fs to 1 as it moves in
+                            opacity = 1 - now;
+                            current_fs.css({'left': left});
+                            previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+                        }, 
+                        duration: 800, 
+                        complete: function(){
+                            current_fs.hide();
+                            animating = false;
+                        }, 
+                        //this comes from the custom easing plugin
+                        easing: 'easeInOutBack'
+                    });
+                });
+
+                $(".submit").click(function(){
+                    return false;
+                })
+
+
+                //add 
+                
+                function updateElementIndex(el, prefix, ndx){
+                    var id_regex = new RegExp('(' + prefix + '-\\d+- )');
+                    var replacement = prefix + '-' + ndx + '-';
+                    if ( $(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+                    if (el.id) el.id = el.id.replace(id_regex, replacement);
+                    if (el.name) el.name = el.name.replace(id_regex, replacement);
+                }
+
+                function addForm(btn, prefix){
+                        
+                        var formCount = parseInt($('#id_'+ prefix + '-TOTAL_FORMS').val());
+                        
+                        var div = btn.closest('fieldset').find('div.django-formset')
+                        var p = btn.closest('table').find('.add-form-row')
+
+                        
+                        
+                        console.log(div)
+
+                    
+                    
+                        if (formCount < 1000){
+                            // var row = btn.closest('table').find('tr.item:first-child').clone()
+                            var formset = btn.closest('fieldset').find('div.formset-list:first-child').clone()
+                        
+                            
+
+                            div.append(formset)
+                        
+                            $(".errorlist", formset).remove();
+                            formset.children().removeClass("error");
+                            
+
+                            formset.find('.formset-field').each(function (){
+                                updateElementIndex(this, prefix, formCount);
+                                $(this).val(' ');
+                                $(this).removeAttr('value')
+                                $(this).prop('checked', false);
+                                
+                            });
+
+
+                            $(formset).find("delete").click(function (){
+                                
+                                return deleteForm(this, prefix);
+                            });
+
+                            $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
+                        }
+                        return false;
+                    }
+                function deleteForm(btn, prefix){
+                    var formCount = parseInt($('#id_'+ prefix + '-TOTAL_FORMS').val());
+                    var rowNumber = btn.closest('fieldset').find('div.formset-list').length
+                    console.log(rowNumber)
+
+                    
+                    
+        
+                    
+                    if (rowNumber  > 1){
+
+                        var goto_id = btn.find('input').val();
+                        
+                    
+                        if(goto_id){
+                            $.ajax({
+                                url:"/" + window.location.pathname.split("/")[1]+ "/formset-data-delete/"+ goto_id +"/?next="+window.location.pathname,
+                                error: function(){
+                                    console.log('error')
+                                },
+                                success: function(data){
+                                    $(btn).parents('.formset-list').remove();
+                                },
+                                type:'GET',
+                            });
+                        }else{
+                            
+                            $(btn).parents('.formset-list').remove();
+                            rowNumber--
+                            
+                            
+                        
+                        }
+
+                        var forms = btn.closest('fieldset').find('div.formset-list')
+
+                        $('#id_'+ prefix + '-TOTAL_FORMS').val(rowNumber);
+                        var i = 0;
+
+                        for (formCount = forms.length; i < formCount; i++){
+                            $(forms.get(i)).find('.formset-field').each(function(){
+                                updateElementIndex(this, prefix, i);
+                            
+                            });
+                        }
+                    }
+                    
+                    return false
+                }
+        
+
+            $('body').on('click', '.remove-form-row', function(){
+               
+                deleteForm($(this), String($(this).attr('id')));
+            });
+
+
+            $('body').on('click', '.add-form-row', function(){ 
+            return addForm($(this), String($(this).attr('id')));
+            
+            });
+        
+
+        });
+</script>
+</body>
+</html>

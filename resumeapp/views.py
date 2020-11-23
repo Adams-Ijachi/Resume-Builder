@@ -1,30 +1,40 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from .forms import ResumeForm, ExperienceFormSet, PersonalInformationForm
-from .models import Template, Experience
+from .forms import ResumeForm, ExperienceFormSet, PersonalInformationForm,EducationFormSet
+from .models import Template, Experience, Education
 
 # Create your views here.
 
 
 def home(request):
-    return render(request, 'home.html') # file = request.FILES['D']
+    context = {}
+    personalInformation = PersonalInformationForm()
+    experienceForm = ExperienceFormSet(queryset=Experience.objects.none(),prefix='Experience', )
+    context['experienceForm'] = experienceForm
+    return render(request, 'form/form.html', context) # file = request.FILES['D']
 
 
 def resumeUpload(request,pk):
     context = {}
     template = get_object_or_404(Template, pk=pk)
     resume = ResumeForm(initial={'template':template})
+
     personalInformation = PersonalInformationForm()
-    experienceForm = ExperienceFormSet(queryset=Experience.objects.none(),prefix='Experience')
+    experienceForm = ExperienceFormSet(queryset=Experience.objects.none(),prefix='Experience', )
+    educationForm = EducationFormSet(queryset=Education.objects.none(), prefix='Education')
     context['experienceForm'] = experienceForm
     context['resume'] = resume
     context['personalInformation'] = personalInformation
+    context['educationForm'] = educationForm
+    
     return render(request, 'upload.html', context) # file = request.FILES['D']
 
-# def delete(request, pk):
-#     if request.method =='POST':
-#         temp = Template.objects.get(pk=pk)
-#         temp.delete()
-#         return redirect('tempList')
+def form(request):
+    context = {}
+    personalInformation = PersonalInformationForm()
+    experienceForm = ExperienceFormSet(queryset=Experience.objects.none(),prefix='Experience', )
+    context['personalInformation'] = personalInformation
+    context['experienceForm'] = experienceForm
+    return render (request, 'form/formbase.html', context)
 
 
 # def user(request):
