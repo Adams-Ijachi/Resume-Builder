@@ -28,13 +28,14 @@
             body {
                 font-family: montserrat, arial, verdana;
                 background: transparent;
+                overflow-x: hidden;
             }
 
             /*form styles*/
             #msform {
                 text-align: center;
                 position: relative;
-                margin-top: 30px;
+                margin-top: 10px;
             }
 
             #msform fieldset {
@@ -252,10 +253,12 @@
         <!-- MultiStep Form -->
 <div class="row">
     <div class="col-md-12 col-md-offset-3">
-        <form id="msform">
+        <form id="msform" action="{% url 'resumeForm' %}" name="xupo" method="POST">
+            {% csrf_token %}
             <!-- progressbar -->
             <ul id="progressbar">
-                <li class="active"></li>
+                 <li class="active"></li>
+                <li></li> 
                 <li></li>
                 <li></li>
   
@@ -302,12 +305,12 @@
                 <div class="form-row" >
                     <div class="form-holder">
                         <label for="{{ personalInformation.email_address.id_for_label }}">{{ personalInformation.email_address.label_tag }}</label>
-                        <i class="zmdi zmdi-account"></i>
+                        
                         {{ personalInformation.email_address }}
                     </div>
                     <div class="form-holder">
                         <label for="{{ personalInformation.phone_number.id_for_label }}">{{ personalInformation.phone_number.label_tag }}</label>
-                        <i class="zmdi zmdi-account"></i>
+                        
                         {{ personalInformation.phone_number }}
                     </div>
                 </div>
@@ -327,20 +330,18 @@
                     <div class="formset-list">
                         {% for formset in experienceForm%}
 
-                        {% for hidden in form.hidden %}
-                        
-                        {{hidden }}
-
-                        {% endfor %}
+                        {{ formset.id }}
+                        {{ formset.ORDER }}
+                        {{ formset.DELETE}}
                         <div class="form-row" >
                             <div class="form-holder">
                                 <label for="{{ formset.employer.id_for_label }}">{{ formset.employer.label_tag }}</label>
-                                <i class="zmdi zmdi-account"></i>
+                                
                                 {{ formset.employer }}
                             </div>
                             <div class="form-holder">
                                 <label for="{{ formset.job_title.id_for_label }}">{{ formset.job_title.label_tag }}</label>
-                                <i class="zmdi zmdi-account"></i>
+                                
                                 {{ formset.job_title }}
                             </div>
                         </div>
@@ -378,77 +379,82 @@
                         </div>
         
                 {% endfor %}
-                <input type="button" name="next" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}" value="delete"/>
+                <input type="button" name="next" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}" value="Delete"/>
                 <hr>
                     </div>
 
                 </div>
                  
-                 <input type="button" name="next" class="btn btn-success btn-sm add-form-row" id="{{ experienceForm.prefix }}" value="Add"/>
+                 <input type="button" name="next" class="btn btn-success btn-sm add-form-row" id="{{ experienceForm.prefix }}" value=" + Add"/>
                  
                  {{ experienceForm.management_form }}
                  <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
                  <input type="button" name="next" class="next action-button" value="Next"/>
-            </fieldset>
+            </fieldset> 
+
+
             <fieldset>
-                <h2 class="fs-title">Experience</h2>
-                <h3 class="fs-subtitle">List your work experience, from most recent to oldest</h3>
+                <h2 class="fs-title">Education</h2>
+                <h3 class="fs-subtitle">Add information about your educational background</h3>
                 <div class="django-formset">
                     <div class="formset-list">
-                        {% for formset in experienceForm%}
+                        {% for formset in educationForm %}
 
-                        {% for hidden in form.hidden %}
-                        
-                        {{hidden }}
-
-                        {% endfor %}
+                        {{ formset.id }}
+                        {{ formset.ORDER }}
+                        {{ formset.DELETE}}
                         <div class="form-row" >
                             <div class="form-holder">
-                                <label for="{{ formset.employer.id_for_label }}">{{ formset.employer.label_tag }}</label>
-                                <i class="zmdi zmdi-account"></i>
-                                {{ formset.employer }}
+                                <label for="{{ formset.school_name.id_for_label }}">{{ formset.school_name.label_tag }}</label>
+                                
+                                {{ formset.school_name }}
                             </div>
                             <div class="form-holder">
-                                <label for="{{ formset.job_title.id_for_label }}">{{ formset.job_title.label_tag }}</label>
-                                <i class="zmdi zmdi-account"></i>
-                                {{ formset.job_title }}
+                                <label for="{{ formset.country.id_for_label_tag }}">{{ formset.country.label_tag }}</label>
+                                {{ formset.country }}
                             </div>
                         </div>
+
                         <div class="form-row" >
-                            <div class="form-group cover_image">
-                               <div class="form-holder">
-                                    <label for="{{ formset.start_year.id_for_label }}">{{ formset.start_year.label_tag }}</label>
-                                    {{ formset.start_year }}
-                                </div>
-                                <div class="form-holder">
-                                    <label for="{{ formset.start_month.id_for_label }}">{{ formset.start_month.label_tag }}</label>
-                                    {{ formset.start_month }}
-                                </div>
-
+                            <div class="form-holder">
+                                <label for="{{ formset.state.id_for_label }}">{{ formset.state.label_tag }}</label>
+                                
+                                {{ formset.state }}
                             </div>
-
-                            <div class="form-group cover_image">
-                                <div class="form-holder endYearAndMonth">
-                                    <label for="{{ formset.end_year.id_for_label }}">{{ formset.end_year.label_tag }}</label>
-                                    {{ formset.end_year }}
-                                </div>
-                                <div class="form-holder endYearAndMonth">
-                                    <label for="{{ formset.end_year.id_for_label }}">{{ formset.end_year.label_tag }}</label>
-                                    {{ formset.end_year }}
-                                </div>
-
+                            <div class="form-holder">
+                                <label for="{{ formset.degree.id_for_label_tag }}">{{ formset.degree.label_tag }}</label>
+                                {{ formset.degree }}
                             </div>
-
                         </div>  
+
+                        <div class="form-row" >
+                            <div class="form-holder">
+                                <label for="{{ formset.field_of_study.id_for_label }}">{{ formset.field_of_study.label_tag }}</label>
+                                
+                                {{ formset.field_of_study }}
+                            </div>
+                            <div class="form-group cover_image">
+                                <div class="form-holder endYearAndMonth">
+                                    <label for="{{ formset.graduation_year.id_for_label }}">{{ formset.graduation_year.label_tag }}</label>
+                                    {{ formset.graduation_year }}
+                                </div>
+                                <div class="form-holder endYearAndMonth">
+                                    <label for="{{ formset.graduation_month.id_for_label }}">{{ formset.graduation_month.label_tag }}</label>
+                                    {{ formset.graduation_month }}
+                                </div>
+
+                            </div>
+                        </div>
+
                         <div class="form-row checkboxFloat" >
                             <div class="form-group">
-                                <label for="{{ formset.presently_work_here.id_for_label }}" style="width: 100%;" >{{ formset.presently_work_here.label_tag }}</label>
-                                {{ formset.presently_work_here }}
+                                <label for="{{ formset.presently_school_here.id_for_label }}" style="width: 100%;" >{{ formset.presently_school_here.label_tag }}</label>
+                                {{ formset.presently_school_here }}
                             </div>
                         </div>
         
                 {% endfor %}
-                <input type="button" name="next" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}" value="delete"/>
+                <input type="button" name="next" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}" value="Delete"/>
                 <hr>
                     </div>
 
@@ -460,6 +466,48 @@
                  <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
                  <input type="button" name="next" class="next action-button" value="Next"/>
             </fieldset>
+
+
+            <fieldset>
+                <h2 class="fs-title">Skills</h2>
+                <h3 class="fs-subtitle">Highlight some of your skills</h3>
+                <div class="django-formset">
+                    {% for formset in skillForm %}
+                    <div class="formset-list">
+                        
+
+                        {{ formset.id }}
+                        {{ formset.ORDER }}
+                        {{ formset.DELETE}}
+                        <div class="form-row" >
+                            <div class="form-holder">
+                                <label for="{{ formset.name.id_for_label }}">{{ formset.name.label_tag }}</label>
+                               
+                                {{ formset.name }}
+                            </div>
+                            <div class="form-holder">
+                                <label for="{{ formset.level.id_for_label }}">{{ formset.level.label_tag }}</label>
+                            
+                                {{ formset.level }}
+                            </div>
+                        </div>       
+                
+                <input type="button" name="next" class="btn btn-danger btn-sm remove-form-row" id="{{ experienceForm.prefix }}" value="Delete"/>
+                <hr>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                 
+                 <input type="button" name="next" class="btn btn-success btn-sm add-form-row" id="{{ experienceForm.prefix }}" value=" + Add"/>
+                 
+                 {{ experienceForm.management_form }}
+                 <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                 <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+            </fieldset>
+
+
+           
         </form>
     </div>
 </div>
@@ -550,9 +598,9 @@
                     });
                 });
 
-                $(".submit").click(function(){
-                    return false;
-                })
+              //$(".submit").click(function(){
+                //     return false;
+                // })
 
 
                 //add 
@@ -574,7 +622,7 @@
 
                         
                         
-                        console.log(div)
+                       
 
                     
                     
@@ -595,6 +643,8 @@
                                 $(this).val(' ');
                                 $(this).removeAttr('value')
                                 $(this).prop('checked', false);
+                               
+
                                 
                             });
 

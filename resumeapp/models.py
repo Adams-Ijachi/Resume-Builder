@@ -6,6 +6,7 @@ from django.conf import settings
 
 YEAR_CHOICES = [(y,y) for y in range(1968, datetime.date.today().year+1)]
 MONTH_CHOICE = [(m,m) for m in range(1,13)]
+SKILL_CHOICE = [(s,s) for s in range(1,11)]
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
@@ -85,7 +86,7 @@ class Skill(models.Model):
     
     name = models.CharField(max_length=100,null=True, blank=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name='resume_skills', null=True, blank=True)
-    level = models.IntegerField(null=True, blank=True)
+    level = models.IntegerField(choices=SKILL_CHOICE,null=True, blank=True, default='Choose A Skill')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

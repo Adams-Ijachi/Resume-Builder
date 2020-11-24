@@ -32,8 +32,8 @@ class ExperienceForm(ModelForm):
         exclude = ['resume','timestamp']
 
         widgets = {
-            'employer': TextInput(attrs={'class':'formset-field form-control'}),
-            'job_title': TextInput(attrs={'class':'formset-field form-control'}),
+            'employer': TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. IBM '}),
+            'job_title': TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. Engineer'}),
             'start_year': Select(attrs={'class':'form-control'}),
             'start_month': Select(attrs={'class':'form-control'}),
             'end_year': Select(attrs={'class':'form-control'}),
@@ -46,16 +46,31 @@ class EducationForm(ModelForm):
         model = Education
         exclude = ['resume','timestamp']
         widgets ={
-            'school_name': TextInput(attrs={'class':'formset-field'}),
-            'state':TextInput(attrs={'class':'formset-field'}),
-            'degree': TextInput(attrs={'class':'formset-field'}),
-            'field_of_study': TextInput(attrs={'class':'formset-field'}),
-            'presently_school_here': CheckboxInput(attrs={'class':'presently_school_here','onClick':'log($(this))'}),
+            'school_name': TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. University of jos '}),
+            'state':TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. Plateau State '}),
+            'country':Select(attrs={'class':'form-control',}),
+            'degree':TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. BSA '}),
+            'field_of_study':TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. Computer Science '}),
+            'graduation_month':Select(attrs={'class':'form-control'}),
+            'graduation_year': Select(attrs={'class':'form-control'}),
+            'presently_school_here': CheckboxInput(attrs={'class':'presently_school_here','onClick':'endYearAndMonthDisplay($(this))'}),
         
             
         }
-   
-    
+
+class SkillForm(ModelForm):
+    class Meta:
+        model = Skill
+        fields  = ['name','level']
+        widgets = {
+            'name': TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. Python '}),
+            'level':Select(attrs={'class':'form-control'}),
+
+        }
+
+
+SkillFormSet = modelformset_factory(Skill, form=SkillForm, extra=3)
+EducationFormSet = modelformset_factory(Education, form=EducationForm)
 ExperienceFormSet = modelformset_factory(Experience, form=ExperienceForm)
 
-EducationFormSet = modelformset_factory(Education, form=EducationForm)
+
