@@ -1,49 +1,42 @@
-<!doctype html>
-
+<!DOCTYPE html>
 {% load static %}
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000"/>
-    
-   
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% block css %}
 
-    <!-- Custom CSS -->
-    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
-    
-    <style>
-      .bg-chatme {
-          background-color: #0c8adc!important;
-         }
-      .btn-outline-chatme {
-            color: #ffffff;
-            border-color: #162c48;
-        }
-    </style>
-    <title>Create Template</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    {% include "components/navbar.html" %}
+    {% endblock css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/a7eb06a9bd.js"></script>    
+</head>
+<body>
+   {% include 'components/navbar.html' %}
 
-   <div class="container">
+    <!-- Hero section -->
+    {% block herosection %}
+
+    {% endblock herosection %}
 
    
-      {% block content %}
     
-      {% endblock content %}
-    </div>
 
+    <!-- Template Section -->
+    {% block templatesection %}
+   
+    {% endblock %}
 
-    
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  </body>
+    <!-- Footer Section -->
+    {% include 'components/footer.html' %}
 
+      
+    {% block javascript %}
+
+    {% endblock javascript %}
+    <script src='{% static "js/app.js" %}'></script>
+
+</body>
 </html>

@@ -39,7 +39,7 @@
             }
 
             #msform fieldset {
-                background: white;
+                background: linear-gradient(to left, #ff0834 0%, #ffb199 100%);
                 border: 0 none;
                 border-radius: 0px;
                 box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
@@ -253,7 +253,7 @@
         <!-- MultiStep Form -->
 <div class="row">
     <div class="col-md-12 col-md-offset-3">
-        <form id="msform" action="{% url 'resumeForm' %}" name="xupo" method="POST">
+        <form id="msform" action="{% url 'resumeForm' %}"  method="POST">
             {% csrf_token %}
             <!-- progressbar -->
             <ul id="progressbar">
@@ -293,6 +293,7 @@
                     <div class="form-holder">
                         <label for="{{ personalInformation.country.id_for_label_tag }}">{{ personalInformation.country.label_tag }}</label>
                         {{ personalInformation.country }}
+
                     </div>
                     <div class="form-holder">
                         <label for="{{ personalInformation.state.id_for_label_tag }}">{{ personalInformation.state.label_tag }}</label>
@@ -513,6 +514,7 @@
 </div>
 <!-- /.MultiStep Form -->
 </div>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script>
         function endYearAndMonthDisplay(btn) {
             var endYearAndMonth = btn.parents('div.formset-list').find('.endYearAndMonth').toggleClass('d-none')        
@@ -526,6 +528,12 @@
                 var animating; //flag to prevent quick multi-click glitches
 
                 $(".next").click(function(){
+                    //validate each page before submit
+                    $('#msform').validate();
+                    if (!$('#msform').valid()) {
+                        
+                        return false;
+                    }
                     if(animating) return false;
                     animating = true;
                     

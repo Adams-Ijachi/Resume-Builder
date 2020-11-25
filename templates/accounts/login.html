@@ -1,22 +1,35 @@
-{% extends "base.html" %}
-{% include 'accounts/base.html' %}
+
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock  %}
 
 
 
-{% block content %}
+
+
+{% block herosection %}
 
 
 
-    <h1>{{ title }}</h1>
+    <h1 style="text-align: center; margin-top: 20px;">{{ title }}</h1>
     {% if description %}
      <p>{{description}}</p>
     {% endif %}
 
     {% include "components/accountform.html" with form=form btn_label=btn_label %}
+    <div style="margin-bottom:20px">
+
+    </div>
     
+{% endblock herosection %}
 
 
-{% endblock content %}
+
+{% block javascript %}
+
+{% endblock javascript %}
 
 
 
