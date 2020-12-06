@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock  %}
+
+{% block herosection %}
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+        <!-- <div class="text-center">
+            <img class="profile-user-img img-fluid img-circle" src="" alt="User profile picture">
+        </div> -->
+
+        <h3 class="profile-username text-center">{{ request.user.username }}</h3>
+
+        <p class="text-muted text-center">check out your resumes</p>
+
+        <ul class="list-group list-group-unbordered mb-3">
+            {% for resume in user_resume %}
+            <li class="list-group-item">
+            <b> <a href="{% url 'resume_render' resume.id  %}" style="text-decoration:none;color:#141414;text-transform:capitalize;">{{ resume.template }}</a></b> <a class="float-right">{{ resume.timestamp }}</a>
+            </li>
+
+            {% endfor %}
+        </ul>
+
+        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+    <div style="margin-bottom:20px">
+
+    </div>
+{% endblock herosection %}
+

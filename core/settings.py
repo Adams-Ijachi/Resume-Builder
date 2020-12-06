@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'resumeapp',
+
+    #apps
+    'resumeapp.apps.ResumeappConfig',
+    'accounts.apps.AccountsConfig',
+    'profiles.apps.ProfilesConfig',
+
+    #thrid party apps
     'crispy_forms',
 
     #dependacies
@@ -61,7 +67,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'templates'],
+        'DIRS': [BASE_DIR/'templates',BASE_DIR/'media'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -13,9 +13,9 @@ User = settings.AUTH_USER_MODEL
 class Template(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
-  #   cover_image = models.ImageField(verbose_name='Cover_Image',upload_to='resume/cover_image/', null=True, blank=True)
+    image = models.ImageField(verbose_name='Cover_Image',upload_to='resume/template_image/', null=True, blank=True)
     templates = models.FileField(upload_to='resume/templates/')
-    # timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -29,7 +29,7 @@ class Resume(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.username or ''
     
     
 
@@ -40,7 +40,7 @@ class PersonalInformation(models.Model):
     resume = models.OneToOneField(Resume, on_delete=models.CASCADE)
     firstname = models.CharField(max_length=100, verbose_name='First Name')
     lastname = models.CharField(max_length=100, verbose_name='Last Name')
-    cover_image = models.ImageField(verbose_name='Cover_Image',upload_to='resume/cover_image/', null=True, blank=True)
+    cover_image = models.ImageField(verbose_name='Cover_Image',upload_to='user/cover_image/', null=True, blank=True)
     address = models.CharField(max_length=200, verbose_name='Address',null=True, blank=True)
     country = CountryField(blank_label='(select country)')
     state = models.CharField(max_length=100, verbose_name='State',null=True, blank=True)
@@ -55,7 +55,7 @@ class PersonalInformation(models.Model):
 
 class Experience(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True, blank=True)
-    employer = models.CharField(max_length=100, verbose_name='Employer')
+    employer = models.CharField(max_length=100, verbose_name='Employer',null=True, blank=True)
     job_title = models.CharField(max_length=100, verbose_name='Job Title',null=True, blank=True)
     start_year = models.IntegerField(choices=YEAR_CHOICES,default=datetime.datetime.now().year,null=True, blank=True)
     start_month = models.IntegerField(choices=MONTH_CHOICE,default=datetime.datetime.now().month,null=True, blank=True)
@@ -65,17 +65,17 @@ class Experience(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.resume.user.username
+        return self.resume.user.username 
 
 class Education(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True, blank=True)
     school_name = models.CharField(max_length=100, verbose_name='School Name',null=True, blank=True)
-    country = CountryField(blank_label='(select country)')
+    country = CountryField(blank_label='(select country)', blank=True)
     state = models.CharField(max_length=100, verbose_name='State',null=True, blank=True)
     degree = models.CharField(max_length=100, verbose_name='Degree',null=True, blank=True)
     field_of_study = models.CharField(max_length=100, verbose_name='Field Of Study',null=True, blank=True)
-    graduation_month = models.IntegerField(choices=YEAR_CHOICES,default=datetime.datetime.now().year,null=True, blank=True)
-    graduation_year = models.IntegerField(choices=MONTH_CHOICE,default=datetime.datetime.now().month,null=True, blank=True)
+    graduation_month = models.IntegerField(choices=MONTH_CHOICE,default=datetime.datetime.now().month,null=True, blank=True)
+    graduation_year = models.IntegerField(choices=YEAR_CHOICES,default=datetime.datetime.now().year,null=True, blank=True)
     presently_school_here = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -90,7 +90,7 @@ class Skill(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.name or ''
 
 
 # class About(models.Model):

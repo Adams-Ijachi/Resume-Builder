@@ -7,8 +7,8 @@ urlpatterns = [
    
     path('', views.home, name='home'),
     path('upload/<int:pk>', views.resumeUpload, name='resumeUpload'),
-    path('form', views.formRender, name='resumeForm'),
-    path('login', views.login, name='login')
+    path('form/<int:pk>', views.formRender, name='resumeForm'),
+
     
     # path('',views.templateslist, name='tempList'),
     # path('upload',views.templatesUpload, name='templatesUpload' ),

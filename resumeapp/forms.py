@@ -69,7 +69,7 @@ class SkillForm(ModelForm):
         }
 
 
-SkillFormSet = modelformset_factory(Skill, form=SkillForm, extra=3)
+SkillFormSet = modelformset_factory(Skill, form=SkillForm)
 EducationFormSet = modelformset_factory(Education, form=EducationForm)
 ExperienceFormSet = modelformset_factory(Experience, form=ExperienceForm)
 

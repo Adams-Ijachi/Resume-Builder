@@ -4,30 +4,23 @@
         <h1>Lets get started !!!</h1>
         <h2>Select a template</h2>
         <div class="template__container">
+            {% for template in templates %}
             <div class="template__card" >
                 <div class="template__img">
-                    <img src="./images/template (2).jpg" alt="">
+                    {% if  template.image %}
+                    <img src="media/{{ template.image }}" alt="template_cover_image">
+                    {% else %}
+                    <img src="" alt="template_cover_image">
+                    {% endif %}
+
                 </div>
-                <h2>Experience Bliss</h2>
-                <p>AI Powered Technology</p>
-                <button>Use This template</button>
+                
+                <h2>{{ template.title }}</h2>
+                <p>{{ template.description }}</p>
+                <a type="button" href="{% url 'resumeForm' template.id  %}">Use this template</a>
             </div>
-            <div class="template__card">
-                <div class="template__img">
-                    <img src="./images/template (1).jpg" alt="">
-                </div>
-                <h2>Happiness</h2>
-                <p>Take the leap</p>
-                <button>Use This template</button>
-            </div>
-            <div class="template__card">
-                <div class="template__img">
-                    <img src="./images/template (1).jpg" alt="">
-                </div>
-                <h2>Happiness</h2>
-                <p>Take the leap</p>
-                <button>Use This template</button>
-            </div>
+            {% endfor %}
+           
             
         </div>
     </div>

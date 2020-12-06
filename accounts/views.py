@@ -24,7 +24,7 @@ def logout_view(request, *args, **kwargs):
 
 def register_view(request, *args, **kwargs):
     form  = UserCreateForm(request.POST or None)
-    print('k')
+  
     if form.is_valid():
         user = form.save(commit=True)
         user.set_password(form.cleaned_data.get("password1"))
