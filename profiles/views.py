@@ -18,9 +18,14 @@ def profile_resume_list_view(request, *args, **kwargs):
     return render(request, 'pages/profiles.html', {'user_resume':user_resume})
 
 def resume_render_view(request, pk , *args, **kwargs):
-    print(request)
+    context = {}
     resume = get_object_or_404(Resume, pk=pk)
+    context['resume'] = resume
+
     resumes_template_path = resume.template.templates
-    r =  render_to_string(f'{resumes_template_path}')
-    return HttpResponse(r)
+    context['temp_path'] = str(resumes_template_path)
+
+    resume_template =  render_to_string(f'{resumes_template_path}',context,request=request)
+    
+    return render(request, 'temp/basetemp.html', context)
 
