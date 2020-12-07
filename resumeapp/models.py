@@ -1,8 +1,8 @@
 import datetime
 from django.db import models
 from django_countries.fields import CountryField
-from django.core.validators import RegexValidator
 from django.conf import settings
+from .managers import ResumeManger
 
 YEAR_CHOICES = [(y,y) for y in range(1968, datetime.date.today().year+1)]
 MONTH_CHOICE = [(m,m) for m in range(1,13)]
@@ -27,6 +27,8 @@ class Resume(models.Model):
     skills = models.ManyToManyField("Skill",verbose_name="Skill", related_name='skills', blank=True)
     summary= models.TextField(max_length=100, verbose_name='Professional Summary', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+
 
     def __str__(self):
         return self.user.username or ''
@@ -48,6 +50,7 @@ class PersonalInformation(models.Model):
     email_address = models.EmailField(max_length=254, verbose_name='Email Address')
     phone_number = models.CharField(max_length=15, verbose_name='Phone Number',null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    
 
     def __str__(self):
         return self.resume.user.username
@@ -63,6 +66,8 @@ class Experience(models.Model):
     end_month = models.IntegerField(choices=MONTH_CHOICE,default=datetime.datetime.now().month,null=True, blank=True)
     presently_work_here = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+    user_experiences = ResumeManger()
 
     def __str__(self):
         return self.resume.user.username 
@@ -78,6 +83,8 @@ class Education(models.Model):
     graduation_year = models.IntegerField(choices=YEAR_CHOICES,default=datetime.datetime.now().year,null=True, blank=True)
     presently_school_here = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+    user_experiences = ResumeManger()
 
     def __str__(self):
         return self.resume.user.username
@@ -88,6 +95,8 @@ class Skill(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name='resume_skills', null=True, blank=True)
     level = models.IntegerField(choices=SKILL_CHOICE,null=True, blank=True, default='Choose A Skill')
     timestamp = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+    user_experiences = ResumeManger()
 
     def __str__(self):
         return self.name or ''
