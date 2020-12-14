@@ -1,4 +1,4 @@
-<!-- style -->
+
 <style>
 	html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {
 border:0;
@@ -268,7 +268,7 @@ section:last-child {
 			
 			<div id="contactDetails" class="quickFade delayFour">
 				<ul>
-					<li>email: <a href="{{personal_info.email_address }}" target="_blank">{{ personal_info.email_address }}</a></li>
+					<li>email: <a href="{{ personal_info.email_address }}" target="_blank">{{ personal_info.email_address }}</a></li>
 				
 					<li>{{ personal_info.phone_number }}</li>
 				</ul>
@@ -277,7 +277,7 @@ section:last-child {
 		</div>
 		
 		<div id="mainArea" class="quickFade delayFive">
-			<section>
+			<section style='border-top: 1px solid #dedede;padding: 20px 0 0;'>
 				<article>
 					<div class="sectionTitle">
 						<h1>Personal Profile</h1>
@@ -290,8 +290,7 @@ section:last-child {
 				<div class="clear"></div>
 			</section>
 			
-			
-			<section>
+			<section style='border-top: 1px solid #dedede;padding: 20px 0 0;'> 
 				<div class="sectionTitle">
 					<h1>Work Experience</h1>
 				</div>
@@ -359,10 +358,3 @@ section:last-child {
 		</div>
 	</div>
 </div>
-
-
-
-	
-		
-
-	

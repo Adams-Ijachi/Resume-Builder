@@ -1,3 +1,7 @@
+
+
+
+
 {% extends 'base.html' %}
 
 {% load static %}
@@ -16,6 +20,7 @@
 
         <p class="text-muted text-center">check out your resumes</p>
 
+        {% if user_resume %}
         <ul class="list-group list-group-unbordered mb-3">
             {% for resume in user_resume %}
             <li class="list-group-item">
@@ -24,8 +29,17 @@
 
             {% endfor %}
         </ul>
+        {% else %}
+         
+         
 
-        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+         <h2>Sorry You have no resumes</h2>
+
+
+        <a href="/" class="btn btn-primary btn-block"><b>Create a resume</b></a>
+        {% endif %}
+
+        
         </div>
         <!-- /.card-body -->
     </div>

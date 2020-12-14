@@ -11,7 +11,7 @@ def login_view(request, *args, **kwargs):
     if form.is_valid():
         user_ = form.get_user()
         login(request, user_)
-        return redirect('/')
+        return redirect(reverse('profile_detail_view'))
     context = {"form":form, "btn_label":"Login","title":"Login"}
     return render(request, 'accounts/login.html',context)
 

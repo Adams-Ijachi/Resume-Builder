@@ -49,17 +49,17 @@
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                    <a href="{% url 'Edit_resume' resume.template.id %}" class="btn btn-block btn-outline-info "><b>Edit</b></a>
+                    <a href="{% url 'Edit_resume' resume.id %}" class="btn btn-block btn-outline-info "><b>Edit</b></a>
                 </li>
                 <li class="list-group-item">
                     <a href="{% url 'Download_PDF' resume.id %}" class="btn btn-block btn-outline-success "><b>Download</b></a>
                 </li>
                 <li class="list-group-item">
-                    <a href="#" class="btn btn-block btn-outline-danger "><b>Delete</b></a>
+                    <a href="{% url 'Delete_resume' resume.id %}" class="btn btn-block btn-outline-danger "><b>Delete</b></a>
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-warning  btn-block "><b>Create New Resume</b></a>
+              <a href="/" class="btn btn-warning  btn-block "><b>Create New Resume</b></a>
             </div>
             <!-- /.card-body -->
           </div>

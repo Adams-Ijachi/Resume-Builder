@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea,modelformset_factory, TextInput, CheckboxInput,ChoiceField, CharField,Select, FileInput, EmailInput
+from django.forms import ModelForm, Textarea,modelformset_factory, TextInput, CheckboxInput,ChoiceField, CharField,Select, FileInput, EmailInput, ImageField, ClearableFileInput
 from .models import *
 
 class ResumeForm(ModelForm):
@@ -17,7 +17,7 @@ class PersonalInformationForm(ModelForm):
         widgets = {
             'firstname':TextInput(attrs={'class':'formset-field','class':'form-control','placeholder':'e.g. Adams'}),
             'lastname':TextInput(attrs={'class':'formset-field','class':'form-control','placeholder':'e.g. Ijachi'}),
-            'cover_image':FileInput(),
+            'cover_image':ClearableFileInput(),
             'address':TextInput(attrs={'class':'form-control','placeholder':'e.g. Dadin Kowa Jos'}),
             'country':Select(attrs={'class':'form-control'}),
             'state':TextInput(attrs={'class':'form-control','placeholder':'e.g. Plateau State '}),
@@ -38,7 +38,7 @@ class ExperienceForm(ModelForm):
             'start_month': Select(attrs={'class':'form-control'}),
             'end_year': Select(attrs={'class':'form-control'}),
             'end_month': Select(attrs={'class':'form-control'}),
-            'presently_work_here': CheckboxInput(attrs={'class':'presently_work_here ','onClick':'endYearAndMonthDisplay($(this))'})
+            'presently_work_here': CheckboxInput(attrs={'class':'presently_work_here '})
         }
 
 class EducationForm(ModelForm):
@@ -53,7 +53,7 @@ class EducationForm(ModelForm):
             'field_of_study':TextInput(attrs={'class':'formset-field form-control','placeholder':'e.g. Computer Science '}),
             'graduation_month':Select(attrs={'class':'form-control'}),
             'graduation_year': Select(attrs={'class':'form-control'}),
-            'presently_school_here': CheckboxInput(attrs={'class':'presently_school_here','onClick':'endYearAndMonthDisplay($(this))'}),
+            'presently_school_here': CheckboxInput(attrs={'class':'presently_school_here'}),
         
             
         }
@@ -69,8 +69,8 @@ class SkillForm(ModelForm):
         }
 
 
-SkillFormSet = modelformset_factory(Skill, form=SkillForm)
-EducationFormSet = modelformset_factory(Education, form=EducationForm)
-ExperienceFormSet = modelformset_factory(Experience, form=ExperienceForm)
+SkillFormSet = modelformset_factory(Skill, form=SkillForm,can_delete=True)
+EducationFormSet = modelformset_factory(Education, form=EducationForm,can_delete=True)
+ExperienceFormSet = modelformset_factory(Experience, form=ExperienceForm,can_delete=True)
 
 

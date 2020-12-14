@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect,get_object_or_404, reverse
 from django.http import HttpResponse
 from django.db import transaction, IntegrityError
 from .forms import ResumeForm, ExperienceFormSet, PersonalInformationForm,EducationFormSet, SkillFormSet
@@ -73,10 +73,12 @@ def formRender(request, pk, *args, **kwargs):
                         skillOBJ = skill.save(commit=False)
                         skillOBJ.resume = resumes
                         skillOBJ.save()
+                
+                    return redirect(reverse('resume_render', kwargs={'pk': resumes.id}))
             except IntegrityError:
-                print('error')
-               # return      
-        return HttpResponse(request.POST)
+                return HttpResponse('error')
+        
+               
     context['skillForm'] = skillForm
     context['resume'] = resume
     context['educationForm'] = educationForm

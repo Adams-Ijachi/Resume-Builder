@@ -40,7 +40,7 @@
             }
 
             #msform fieldset {
-                background: linear-gradient(to left, #ff0834 0%, #ffb199 100%);
+                background: linear-gradient(to left, #988d54 0%, #bd9999 100%);
                 border: 0 none;
                 border-radius: 0px;
                 box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
@@ -267,7 +267,7 @@
   
             </ul>
             <!-- fieldsets -->
-               <fieldset>
+                <fieldset>
                 <h2 class="fs-title">Personal Details</h2>
                 <h3 class="fs-subtitle">Tell us something more about you</h3>
             
@@ -318,15 +318,15 @@
                         {{ personalInformation.phone_number }}
                     </div>
                 </div>
-                
+     
                 <label for="{{ personalInformation.cover_image.id_for_label }}">{{ personalInformation.cover_image.label_tag }}</label>
-                      <div class="form-holder cover_image">
+                      <div class="form-holder cover_image" style='width:50%'>
                         {{ personalInformation.cover_image }}
                       </div> 
                       {{ personalInformation.management_form }}
                 <input type="button" name="next" class="next action-button" value="Next"/>
 
-            </fieldset>  
+            </fieldset>   
 
             <fieldset id="myFormset1">
                 <h2 class="fs-title">Experience</h2>
@@ -339,6 +339,7 @@
                         {{ formset.id }}
                         {{ formset.ORDER }}
                         {{ formset.DELETE}}
+                      
                         <div class="form-row" >
                             <div class="form-holder">
                                 <label for="{{ formset.employer.id_for_label }}">{{ formset.employer.label_tag }}</label>
@@ -538,12 +539,7 @@
 </div>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script>
-        function endYearAndMonthDisplay(btn) {
-            
-            var endYearAndMonth = btn.parents().eq(2).find('.endYearAndMonth').toggleClass('d-none')  
-            // console.log(btn.parents().eq(2).find('.endYearAndMonth')) 
-            
-            }
+     
     
         $(document).ready(function(){
 
