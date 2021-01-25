@@ -1,3 +1,18 @@
+<<<<<<< HEAD
 .vscode
 /venv
 reqirements.txt
+=======
+/venv
+.vscode
+.vscode
+.env
+practice.py
+selenuim.py
+read.py
+.vscode
+.env
+practice.py
+selenuim.py
+read.py
+>>>>>>> bed84df501d5291bc50daf64a542bd18d3ce295c
