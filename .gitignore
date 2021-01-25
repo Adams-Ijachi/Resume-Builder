@@ -1,2 +1,7 @@
 /venv
 .vscode
+.vscode
+.env
+practice.py
+selenuim.py
+read.py
